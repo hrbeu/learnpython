@@ -28,6 +28,7 @@ class ICMP(ctypes.Structure):
                 pass
 #sprays out udp datagrams
 def udp_sender(SUBNET,MESSAGE):
+     while 1:
         time.sleep(5)
         send_socket=socket.socket(socket.AF_INET,socket.SOCK_DGRAM,0)
         for ip_addr in IPNetwork(SUBNET):
@@ -37,10 +38,8 @@ def udp_sender(SUBNET,MESSAGE):
                         pass
 
 
-def main():
-        t=threading.Thread(target=udp_sender,args=(SUBNET,MESSAGE))
-        t.start()
 
+def udp_receiver():
         sniffer=socket.socket(socket.AF_INET,socket.SOCK_RAW,socket.IPPROTO_ICMP)
         sniffer.bind((HOST,0))
         sniffer.setsockopt(socket.IPPROTO_IP,socket.IP_HDRINCL,1)
@@ -69,10 +68,14 @@ def main():
                 #check for the type and the code within the subnet
                 if icmp_header.type==3 and icmp_header.code==3:
                         if IPAddress(s_addr) in IPNetwork(SUBNET):
-                                if raw_buffer[len(raw_buffer)-len(MESSAGE):]==MESSAGE:
+                                #if raw_buffer[len(raw_buffer)-len(MESSAGE):]==MESSAGE:
                                         print ('Host up: %s' % s_addr)
 
 
 
 if __name__=='__main__':
-        main()
+        t1=threading.Thread(target=udp_sender,args=(SUBNET,MESSAGE))
+        t2=threading.Thread(target=udp_receiver)
+        t1.start()
+        t2.start()
+ 
