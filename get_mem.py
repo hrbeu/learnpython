@@ -1,5 +1,5 @@
-#-*-coding:utf-8-*-
 #/usr/bin/env Python
+#-*-coding:utf-8-*-
 from collections import OrderedDict
 
 def meminfo():

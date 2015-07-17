@@ -1,5 +1,6 @@
-#-*-coding:utf-8-*-
 #!/usr/bin/env Python
+#-*-coding:utf-8-*-
+
 import os
 def load_stat():
     loadavg={}
