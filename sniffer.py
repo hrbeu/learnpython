@@ -8,7 +8,7 @@ HOST='192.168.1.103'
 
 def sniffing(host,win,socket_prot):
 	while 1:
-		sniffer=socket.socket(socket.AF_INET,socket.SOCK_RAW,socket_prot)
+		sniffer=socket.socket(socket.AF_INET,socket.SOCK_RAW,socket.IPPROTO_ICMP)
 		sniffer.bind((HOST,0))
 #include the IP headers in the caputured packets
 		sniffer.setsockopt(socket.IPPROTO_IP,socket.IP_HDRINCL,1)
